@@ -1,8 +1,10 @@
 #ifndef __PARAMETERS_H__
 #define __PARAMETERS_H__
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <map>
+#include <vector>
 #include <typeinfo>
 
 struct Parameters {
@@ -73,6 +75,42 @@ struct Parameters {
 	};
 #undef ADD_FIELD
 
+    // Default constructor
+    Parameters() {}
+
+    // Init with serialized parameters string
+    Parameters(std::string serialized_params) {
+
+        std::istringstream s(serialized_params);
+        std::string line;
+
+        const std::string delimiter = "\t";
+
+        while (std::getline(s, line)) {
+
+            int last_pos = 0;
+            std::string chunks[6];
+
+            if (line[0] == '#')
+                continue;
+
+            int pos = 0;
+            int i = 0;
+            while ((pos = line.find(delimiter, last_pos)) != std::string::npos) {
+                chunks[i] = line.substr(last_pos, pos - last_pos);
+                last_pos = pos + 1;
+                ++i;
+            }
+
+            // Add param
+            auto param = add(chunks[1], chunks[0], chunks[2]);
+            param._possible_values = chunks[3];
+            param._description = chunks[4];
+            param._type_of_param = chunks[5];
+        }
+
+    }
+
 	Param& add(std::string type, std::string name, std::string default_value) {
 		if (data.find(name) != data.end())
 			throw std::runtime_error("Duplicate parameter '" + name + "' found.");
@@ -104,14 +142,23 @@ struct Parameters {
 		// export arguments "API"
 		if (argc > 1 && std::string("--show-params").compare(argv[1]) == 0) {
 			std::cerr << "#This file contains reflexion information for calling a binary file\n";
+			std::cerr << "#name|type|value|possible_values|description|type_of_param\n";
 			for (auto it : data) {
-				for (int i=0;i<4;i++) std::cerr << "####### Reserved for possible future field #############\n";
-				std::cerr << "name=" << it.first << "\n";
-				std::cerr << "type=" << it.second._type << "\n";
-				std::cerr << "possible_values=" << it.second._possible_values << "\n";
-				std::cerr << "values=" << it.second._value << "\n";
-				std::cerr << "description=" << it.second._description << "\n";
-				std::cerr << "type_of_param=" << it.second._type_of_param << "\n";
+			std::cerr
+			    << it.first << "\t"
+			    << it.second._type << "\t"
+			    << it.second._value << "\t"
+			    << it.second._possible_values << "\t"
+			    << it.second._description << "\t"
+			    << it.second._type_of_param << "\t"
+			    << std::endl;
+//				for (int i=0;i<NB_RESERVED;i++) std::cerr << "####### Reserved for possible future field #############\n";
+//				std::cerr << "name=" << it.first << "\n";
+//				std::cerr << "type=" << it.second._type << "\n";
+//				std::cerr << "possible_values=" << it.second._possible_values << "\n";
+//				std::cerr << "values=" << it.second._value << "\n";
+//				std::cerr << "description=" << it.second._description << "\n";
+//				std::cerr << "type_of_param=" << it.second._type_of_param << "\n";
 			}
 			exit(EXIT_SUCCESS);
 		}
