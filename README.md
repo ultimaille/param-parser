@@ -4,14 +4,14 @@ Parser for command-line options, arguments.
 
 ## Purpose
 
-This header file lets you define command-line interfaces. The program defines the parameters it needs - these are expected to be formatted as key/value pairs. 
+This header file lets you define command-line interfaces. The program defines the parameters it needs - these are expected to be formatted as key/value pairs.
 This module also generates a formatted message intended to be read by a third-party application wishing to use this information to generate an interface.
 
 ## Prerequisites
 
- - CMake >= 3.12..3.26
- - C++ >= 20
- - Git
+- CMake >= 3.12..3.26
+- C++ >= 20
+- Git
 
 ## Usage example
 
@@ -49,12 +49,7 @@ Call the `MyProgram` with some arguments:
 $ MyProgram my_string=hello my_bool=true my_int=4 my_float=2 my_double=3 my_file=/path/to/file
 
 --- show values
-my_bool = false
-my_double = 0
-my_file = 0
-my_float = 2
-my_int = 4
-my_string = ""
+my_bool = false my_double = 0 my_file = 0 my_float = 2 my_int = 4 my_string = ""
 
 --- out
 pow(2,4)=16
@@ -67,27 +62,13 @@ Get interface of `MyProgram`:
 $ MyProgram --show-params
 
 #This file contains reflexion information for calling a binary file
-####### Reserved for possible future field #############
-####### Reserved for possible future field #############
-####### Reserved for possible future field #############
-####### Reserved for possible future field #############
-name=my_bool
-type=bool
-possible_values=_undefined
-values=false
-description=A bool
-type_of_param=_undefined
-####### Reserved for possible future field #############
-####### Reserved for possible future field #############
-####### Reserved for possible future field #############
-####### Reserved for possible future field #############
-name=my_double
-type=double
-possible_values=_undefined
-values=0
-description=A double
-type_of_param=_undefined
-...
+#name|type|value|possible_values|description|type_of_param
+my_bool	bool	false	_undefined	A bool	_undefined	
+my_double	double	0	_undefined	A double	_undefined	
+my_file	file	0	_undefined	A file	_undefined	
+my_float	float	0	_undefined	A float	_undefined	
+my_int	int	0	_undefined	A integer	_undefined	
+my_string	string		_undefined	A string	_undefined
 ``` 
 
 This program call with `--show-params` output a computer readable list of parameters info that can be exploited to make a GUI.
