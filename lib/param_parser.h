@@ -62,6 +62,10 @@ struct Parameters {
 				return _value;
 		}
 
+		inline void set(std::string value) {
+		    _value = value;
+		}
+
 		private:
 			inline void assert_type_equals(const std::string type) {
 				if (_type.compare(type) != 0)
@@ -89,8 +93,11 @@ struct Parameters {
         while (std::getline(s, line)) {
 
             int last_pos = 0;
+            // Assume there is only 6 features per parameter
+            // Doesn't check whether file is well formed
             std::string chunks[6];
 
+            // Skip comments (begin by char #)
             if (line[0] == '#')
                 continue;
 
@@ -134,10 +141,18 @@ struct Parameters {
 		}
 	}
 
-	void show_values() {
+    std::string str_values() {
+        std::string s;
 		for (auto it : data)
-			std::cerr << it.first << " = " << it.second.formatted_value() << "\n";
+			s += it.first + "=" + it.second.formatted_value() + " ";
+
+        return s;
+    }
+
+	void show_values() {
+	    std::cerr << str_values();
 	}
+
 	void init_from_args(int argc, char** argv) {
 		// export arguments "API"
 		if (argc > 1 && std::string("--show-params").compare(argv[1]) == 0) {

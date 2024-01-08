@@ -19,7 +19,7 @@ std::string exec(const char* cmd) {
     return result;
 }
 
-Parameters request_executable(std::string executable_path) {
+Parameters request_params(std::string executable_path) {
     // Call executable request its parameters
     std::string stdout = exec((executable_path + " --show-params 2>&1").c_str());
 
@@ -28,8 +28,6 @@ Parameters request_executable(std::string executable_path) {
     return params;
 }
 
-int call_executable(std::string executable_path, Parameters params) {
-    // TODO
-    //exec(executable_path + " ")
-    return 0;
+inline std::string call(std::string executable_path, Parameters params) {
+    return exec((executable_path + " " + params.str_values()).c_str());
 }
