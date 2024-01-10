@@ -15,11 +15,11 @@ struct Parameters {
 	struct Param {
 
 		Param() {
-			_type = "_undefined";
-			_value = "_undefined";
-			_description = "_undefined";
-			_possible_values = "_undefined";
-			_type_of_param = "_undefined";
+			_type = "undefined";
+			_value = "undefined";
+			_description = "undefined";
+			_possible_values = "undefined";
+			_type_of_param = "undefined";
 		}
 
 		ADD_FIELD(type);				// should be one of "int","float","string","file","directory","bool","enum"
@@ -88,7 +88,7 @@ struct Parameters {
         std::istringstream s(serialized_params);
         std::string line;
 
-        const std::string delimiter = "\t";
+        const std::string delimiter = ";";
 
         while (std::getline(s, line)) {
 
@@ -156,16 +156,16 @@ struct Parameters {
 	void init_from_args(int argc, char** argv) {
 		// export arguments "API"
 		if (argc > 1 && std::string("--show-params").compare(argv[1]) == 0) {
-			std::cerr << "#This file contains reflexion information for calling a binary file\n";
-			std::cerr << "#name|type|value|possible_values|description|type_of_param\n";
+			std::cout << "#This file contains reflexion information for calling a binary file\n";
+			std::cout << "#name;type;value;possible_values;description;type_of_param\n";
 			for (auto it : data) {
-			std::cerr
-			    << it.first << "\t"
-			    << it.second._type << "\t"
-			    << it.second._value << "\t"
-			    << it.second._possible_values << "\t"
-			    << it.second._description << "\t"
-			    << it.second._type_of_param << "\t"
+			std::cout
+			    << it.first << ";"
+			    << it.second._type << ";"
+			    << it.second._value << ";"
+			    << it.second._possible_values << ";"
+			    << it.second._description << ";"
+			    << it.second._type_of_param
 			    << std::endl;
 //				for (int i=0;i<NB_RESERVED;i++) std::cerr << "####### Reserved for possible future field #############\n";
 //				std::cerr << "name=" << it.first << "\n";
