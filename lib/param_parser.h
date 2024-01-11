@@ -102,18 +102,30 @@ struct Parameters {
                 continue;
 
             int pos = 0;
-            int i = 0;
+//            int i = 0;
+            std::map<std::string, std::string> kv;
             while ((pos = line.find(delimiter, last_pos)) != std::string::npos) {
-                chunks[i] = line.substr(last_pos, pos - last_pos);
+                std::string chunk = line.substr(last_pos, pos - last_pos);
+                std::cout << "chunk:" << chunk << std::endl;
+                int equal_pos = chunk.find("=");
+                if (equal_pos == std::string::npos)
+                    throw std::runtime_error("Malformed parameter string.");
+
+                std::string key = chunk.substr(0, equal_pos);
+                std::string val = chunk.substr(equal_pos + 1, chunk.length() - equal_pos - 1);
+
+                std::cout << "k:" << key << std::endl;
+                std::cout << "v:" << val << std::endl;
+                kv[key] = val;
                 last_pos = pos + 1;
-                ++i;
+//                ++i;
             }
 
             // Add param
-            auto param = add(chunks[1], chunks[0], chunks[2]);
-            param._possible_values = chunks[3];
-            param._description = chunks[4];
-            param._type_of_param = chunks[5];
+            auto param = add(kv["type"], kv["name"], kv["value"]);
+            param._possible_values = kv["possible_values"];
+            param._description = kv["description"];;
+            param._type_of_param = kv["type_of_param"];;
         }
 
     }
@@ -157,15 +169,14 @@ struct Parameters {
 		// export arguments "API"
 		if (argc > 1 && std::string("--show-params").compare(argv[1]) == 0) {
 			std::cout << "#This file contains reflexion information for calling a binary file\n";
-			std::cout << "#name;type;value;possible_values;description;type_of_param\n";
 			for (auto it : data) {
 			std::cout
-			    << it.first << ";"
-			    << it.second._type << ";"
-			    << it.second._value << ";"
-			    << it.second._possible_values << ";"
-			    << it.second._description << ";"
-			    << it.second._type_of_param
+			    << "name=" << it.first << ";"
+			    << "type=" << it.second._type << ";"
+			    << "value=" << it.second._value << ";"
+			    << "possible_values=" << it.second._possible_values << ";"
+			    << "description=" << it.second._description << ";"
+			    << "type_of_param=" << it.second._type_of_param
 			    << std::endl;
 //				for (int i=0;i<NB_RESERVED;i++) std::cerr << "####### Reserved for possible future field #############\n";
 //				std::cerr << "name=" << it.first << "\n";

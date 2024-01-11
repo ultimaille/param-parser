@@ -62,13 +62,12 @@ Get interface of `MyProgram`:
 $ MyProgram --show-params
 
 #This file contains reflexion information for calling a binary file
-#name|type|value|possible_values|description|type_of_param
-my_bool	bool	false	_undefined	A bool	_undefined	
-my_double	double	0	_undefined	A double	_undefined	
-my_file	file	0	_undefined	A file	_undefined	
-my_float	float	0	_undefined	A float	_undefined	
-my_int	int	0	_undefined	A integer	_undefined	
-my_string	string		_undefined	A string	_undefined
+name=my_bool;type=bool;value=false;possible_values=undefined;description=A bool;type_of_param=undefined
+name=my_double;type=double;value=0;possible_values=undefined;description=A double;type_of_param=undefined
+name=my_file;type=file;value=0;possible_values=undefined;description=A file;type_of_param=undefined
+name=my_float;type=float;value=0;possible_values=undefined;description=A float;type_of_param=undefined
+name=my_int;type=int;value=0;possible_values=undefined;description=A integer;type_of_param=undefined
+name=my_string;type=string;value=;possible_values=undefined;description=A string;type_of_param=undefined
 ``` 
 
 This program call with `--show-params` output a computer readable list of parameters info that can be exploited to make a GUI.
