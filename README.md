@@ -15,7 +15,7 @@ This module also generates a formatted message intended to be read by a third-pa
 
 ## Usage example
 
-Let the following program be called `MyProgram`:
+Let the following program be called `parameter-example`:
 ```cpp
 // Create parameters
 Parameters params;
@@ -44,12 +44,12 @@ for (int i = 0; i < my_int - 1; i++)
 std::cout << "pow(" << my_float << "," << my_int << "=" << pow_res << std::endl;
 ```
 
-Call the `MyProgram` with some arguments:
+Call the `parameter-example` with some arguments:
 ```shell
 $ MyProgram my_string=hello my_bool=true my_int=4 my_float=2 my_double=3 my_file=/path/to/file
 
 --- show values
-my_bool = false my_double = 0 my_file = 0 my_float = 2 my_int = 4 my_string = ""
+my_bool=true my_double=3 my_file=/path/to/file my_float=2 my_int=4 my_string="hello"
 
 --- out
 pow(2,4)=16
@@ -57,9 +57,9 @@ pow(2,4)=16
 
 Above, the first part concern the output of the method `params.show_values()` and the second is the result of our operations.
 
-Get interface of `MyProgram`:
+Get interface of `parameter-example`:
 ```shell
-$ MyProgram --show-params
+$ parameter-example --show-params
 
 #This file contains reflexion information for calling a binary file
 name=my_bool;type=bool;value=false;possible_values=undefined;description=A bool;type_of_param=undefined
@@ -74,11 +74,11 @@ This program call with `--show-params` output a computer readable list of parame
 
 ## Use in your project
 
-In order to use this lib in your project you can choose between including a shared library or source header directly. We recommend to include the shared lib.
+In order to use this lib in your project you can choose between including source header directly or using this repository as sub-module using cmake `FetchContent`.
 
-### Get as shared lib
+### Get from repository
 
-TODO (see if possible to get from release by CMakeList Download command)
+TODO
 
 ### Get as header
 
