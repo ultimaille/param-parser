@@ -10,7 +10,7 @@ This module also generates a formatted message intended to be read by a third-pa
 ## Prerequisites
 
 - CMake >= 3.12..3.26
-- C++ >= 20
+- C++ >= 17
 - Git
 
 ## Usage example
@@ -76,13 +76,39 @@ This program call with `--show-params` output a computer readable list of parame
 
 In order to use this lib in your project you can choose between including source header directly or using this repository as sub-module using cmake `FetchContent`.
 
-### Get from repository
+### CMakeList configuration
 
-TODO
+If you want to use this library as dependency, you can use the `FetchContent` module of CMakeList. Add and adapt the following in your `CMakeLists.txt`.
+
+```cmake
+# Get param-parser from github
+FetchContent_Declare(
+  param_parser
+  GIT_REPOSITORY https://github.com/ultimaille/param-parser
+  GIT_TAG        master
+)
+FetchContent_MakeAvailable(param_parser)
+
+# Include directory for use as include
+include_directories(${param_parser_SOURCE_DIR})
+
+# Link param-parser library to your program
+# Note: Change program_name by the name of your program
+target_link_libraries(program_name ${CMAKE_DL_LIBS} param-parser)
+```
+
+In your program include parser like this:
+```c++
+#include <lib/param_parser.h>
+```
 
 ### Get as header
 
-TODO (see if possible to publish header and get from release by CMakeList Download command)
+Or you can just copy/paste the `param_parser.h` header file in your project and include like this:
+
+```c++
+#include "param_parser.h"
+```
 
 ## Go further
 

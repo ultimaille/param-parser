@@ -4,6 +4,8 @@
 #include <string>
 #include <cstdio>
 #include <memory>
+#include <array>
+
 #include "param_parser.h"
 
 std::string exec(const char* cmd) {

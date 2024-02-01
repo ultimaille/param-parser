@@ -102,7 +102,6 @@ struct Parameters {
                 continue;
 
             int pos = 0;
-//            int i = 0;
             std::map<std::string, std::string> kv;
             while ((pos = line.find(delimiter, last_pos)) != std::string::npos) {
                 std::string chunk = line.substr(last_pos, pos - last_pos);
@@ -118,7 +117,6 @@ struct Parameters {
                 std::cout << "v:" << val << std::endl;
                 kv[key] = val;
                 last_pos = pos + 1;
-//                ++i;
             }
 
             // Add param
@@ -178,13 +176,6 @@ struct Parameters {
 			    << "description=" << it.second._description << ";"
 			    << "type_of_param=" << it.second._type_of_param
 			    << std::endl;
-//				for (int i=0;i<NB_RESERVED;i++) std::cerr << "####### Reserved for possible future field #############\n";
-//				std::cerr << "name=" << it.first << "\n";
-//				std::cerr << "type=" << it.second._type << "\n";
-//				std::cerr << "possible_values=" << it.second._possible_values << "\n";
-//				std::cerr << "values=" << it.second._value << "\n";
-//				std::cerr << "description=" << it.second._description << "\n";
-//				std::cerr << "type_of_param=" << it.second._type_of_param << "\n";
 			}
 			exit(EXIT_SUCCESS);
 		}
