@@ -1,5 +1,5 @@
 #include <iostream>
-#include "param_parser.h"
+#include <param_parser/param_parser.h>
 
 int main(int argc, char** argv) {
 

@@ -4,8 +4,8 @@
 #include <string>
 #include <cstdio>
 #include <memory>
-#include "param_parser.h"
-#include "param_handler.h"
+#include <param_parser/param_parser.h>
+#include <param_parser/param_handler.h>
 
 int main(int argc, char** argv) {
 

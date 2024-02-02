@@ -1,0 +1,1 @@
+set_target_properties(param-parser PROPERTIES LINKER_LANGUAGE CXX)

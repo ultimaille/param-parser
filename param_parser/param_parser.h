@@ -7,6 +7,9 @@
 #include <vector>
 #include <typeinfo>
 
+// TODO check missing param
+// TODO accept string with whitespace
+// TODO << operator overload !
 struct Parameters {
 
 #define ADD_FIELD(x) Param& x(std::string str) {  _##x=str; return *this; }\
