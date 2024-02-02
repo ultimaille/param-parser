@@ -29,7 +29,7 @@ jobs:
       run: cmake --build build --parallel
 
     - name: Run executable
-      run: build/parameter-example --show-params
+      run: build/bin/parameter-example --show-params
 
 
   windows-msvc:
@@ -46,11 +46,11 @@ jobs:
     - name: Release build
       run: cmake --build build --parallel --config Release
 
-    - name: Release CTest
-      run: build/parameter-example --show-params
+    - name: Release run
+      run: build/bin/Release/parameter-example.exe --show-params
 
     - name: Debug build
       run: cmake --build build --parallel --config Debug
 
-    - name: Debug CTest
-      run: build/parameter-example --show-params
+    - name: Debug run
+      run: build/bin/Debug/parameter-example.exe --show-params

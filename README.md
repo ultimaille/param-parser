@@ -99,7 +99,7 @@ target_link_libraries(program_name ${CMAKE_DL_LIBS} param-parser)
 
 In your program include parser like this:
 ```c++
-#include <lib/param_parser.h>
+#include <param_parser/param_parser.h>
 ```
 
 ### Get as header
