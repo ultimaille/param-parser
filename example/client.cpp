@@ -9,6 +9,11 @@
 
 int main(int argc, char** argv) {
 
+    if (argc < 2) {
+        std::cerr << "Program path expected as first argument." << std::endl;
+        return 0;
+    }
+
     std::string executable_path = std::string(argv[1]);
     // Request params of a given exe
     auto params = request_params(executable_path);

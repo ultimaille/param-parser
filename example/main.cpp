@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
     /* Here computing the pow(my_float, my_int) */
     int my_int = params["my_int"];
     float my_float = params["my_float"];
-    int pow_res = my_float;
+    float pow_res = my_float;
     for (int i = 0; i < my_int - 1; i++)
         pow_res *= my_float;
 

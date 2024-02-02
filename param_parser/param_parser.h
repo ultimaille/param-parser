@@ -25,11 +25,11 @@ struct Parameters {
 			_type_of_param = "undefined";
 		}
 
-		ADD_FIELD(type);				// should be one of "int","float","string","file","directory","bool","enum"
-		ADD_FIELD(value);
-		ADD_FIELD(description);
-		ADD_FIELD(possible_values);		// string with values are separated by ','. For example "option1,option2,option3"
-		ADD_FIELD(type_of_param);		// should be one of "basic" or "advanced" 
+		ADD_FIELD(type)				// should be one of "int","float","string","file","directory","bool","enum"
+		ADD_FIELD(value)
+		ADD_FIELD(description)
+		ADD_FIELD(possible_values)		// string with values are separated by ','. For example "option1,option2,option3"
+		ADD_FIELD(type_of_param)		// should be one of "basic" or "advanced" 
 		
 		Param & default_value(std::string str) {  _value=str; return *this; }
 
