@@ -161,7 +161,7 @@ struct Parameters {
 
 	void init_from_string(const std::string& s) {
 		int eq_pos = 0;
-		for (uint i = 0; i < s.size();i++) if (s[i] == '=') eq_pos = i;
+		for (std::size_t i = 0; i < s.size();i++) if (s[i] == '=') eq_pos = i;
 		std::string var_name = s.substr(0, eq_pos);
 		if (data.find(var_name) == data.end())
 			std::cerr << "Argument " << var_name << " is not defined for this binary\n";
