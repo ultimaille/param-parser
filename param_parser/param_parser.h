@@ -7,10 +7,24 @@
 #include <vector>
 #include <typeinfo>
 
-// TODO check missing param
-// TODO accept string with whitespace
-// TODO << operator overload !
 struct Parameters {
+
+	// Structured param type "enum"
+	struct ParamType {
+		// Primitive types
+		static constexpr const char* Int {"int"};
+		static constexpr const char* Float {"float"};
+		static constexpr const char* Double {"double"};
+		static constexpr const char* Bool {"bool"};
+		static constexpr const char* String {"string"};
+		static constexpr const char* File {"file"};
+		static constexpr const char* Enum {"enum"};
+		// Attributes types
+		static std::string vertices(std::string s, int dim) { return "vertices." + s + "." + std::to_string(dim); }
+		static std::string facets(std::string s, int dim) { return "facets." + s + "." + std::to_string(dim); }
+		static std::string edges(std::string s, int dim) { return "edges." + s + "." + std::to_string(dim); }
+		static std::string cells(std::string s, int dim) { return "cells." + s + "." + std::to_string(dim); }
+	};
 
 #define ADD_FIELD(x) Param& x(std::string str) {  _##x=str; return *this; }\
 	std::string _##x;
@@ -35,36 +49,40 @@ struct Parameters {
 
 		
 		operator int() {
-			assert_type_equals("int");
+			assert_type_equals(ParamType::Int);
 			try { return std::stoi(_value); }
-			catch (std::invalid_argument e) { throw_type_cast_error(_value, "int"); return -1; }
+			catch (std::invalid_argument&) { throw_type_cast_error(_value, ParamType::Int); return -1; }
 		}
 		
 		operator bool() {
-			assert_type_equals("bool");
+			assert_type_equals(ParamType::Bool);
 			return is("true");
 		}
 
 		operator float() {
-			assert_type_equals("float");
+			assert_type_equals(ParamType::Float);
 			try { return std::stof(_value); }
-			catch (std::invalid_argument e) { throw_type_cast_error(_value, "float"); return -1; }
+			catch (std::invalid_argument&) { throw_type_cast_error(_value, ParamType::Float); return -1; }
 		}
 		operator double() {
-			assert_type_equals("float");
+			assert_type_equals(ParamType::Double);
 			try { return std::stod(_value); }
-			catch (std::invalid_argument e) { throw_type_cast_error(_value, "double"); return -1; }
+			catch (std::invalid_argument&) { throw_type_cast_error(_value, ParamType::Double); return -1; }
 		}
 		operator std::string() { return _value; }
-		bool is(std::string str) { return _value.compare(str) == 0; }
 
+		
+		inline bool is(std::string str) { return _value.compare(str) == 0; }
+
+		// Eventually format value (e.g: quotes for string)
 		inline std::string formatted_value() {
-			if (_type.compare("string") == 0)
+			if (_type.compare(ParamType::String) == 0)
 				return "\"" + _value + "\"";
 			else 
 				return _value;
 		}
 
+		// Set value
 		inline void set(std::string value) {
 		    _value = value;
 		}
@@ -95,7 +113,7 @@ struct Parameters {
 
         while (std::getline(s, line)) {
 
-            int last_pos = 0;
+            std::size_t last_pos = 0;
             // Assume there is only 6 features per parameter
             // Doesn't check whether file is well formed
             std::string chunks[6];
@@ -104,20 +122,18 @@ struct Parameters {
             if (line[0] == '#')
                 continue;
 
-            int pos = 0;
+            std::size_t pos = 0;
             std::map<std::string, std::string> kv;
             while ((pos = line.find(delimiter, last_pos)) != std::string::npos) {
                 std::string chunk = line.substr(last_pos, pos - last_pos);
-                std::cout << "chunk:" << chunk << std::endl;
-                int equal_pos = chunk.find("=");
+                
+                std::size_t equal_pos = chunk.find("=");
                 if (equal_pos == std::string::npos)
                     throw std::runtime_error("Malformed parameter string.");
 
                 std::string key = chunk.substr(0, equal_pos);
                 std::string val = chunk.substr(equal_pos + 1, chunk.length() - equal_pos - 1);
 
-                std::cout << "k:" << key << std::endl;
-                std::cout << "v:" << val << std::endl;
                 kv[key] = val;
                 last_pos = pos + 1;
             }
@@ -145,11 +161,12 @@ struct Parameters {
 
 	void init_from_string(const std::string& s) {
 		int eq_pos = 0;
-		for (int i = 0; i < s.size();i++) if (s[i] == '=') eq_pos = i;
+		for (uint i = 0; i < s.size();i++) if (s[i] == '=') eq_pos = i;
 		std::string var_name = s.substr(0, eq_pos);
 		if (data.find(var_name) == data.end())
 			std::cerr << "Argument " << var_name << " is not defined for this binary\n";
 		else {
+			std::cout << s.substr(eq_pos + 1, s.size());
 			data[s.substr(0, eq_pos)]._value = s.substr(eq_pos + 1, s.size());
 		}
 	}
@@ -167,7 +184,7 @@ struct Parameters {
 	}
 
 	void init_from_args(int argc, char** argv) {
-		// export arguments "API"
+		// export parameters "API"
 		if (argc > 1 && std::string("--show-params").compare(argv[1]) == 0) {
 			std::cout << "#This file contains reflexion information for calling a binary file\n";
 			for (auto it : data) {

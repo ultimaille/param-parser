@@ -20,6 +20,8 @@ int main(int argc, char** argv) {
     /* Show args values */
     params.show_values();
 
+    //std::cout << params["my_int"];
+
     /* Using args value to do something */
     /* Here computing the pow(my_float, my_int) */
     int my_int = params["my_int"];

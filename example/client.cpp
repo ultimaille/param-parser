@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
     auto params = request_params(executable_path);
 
     // List fetched parameters
-    for (auto const [key, val] : params.data) {
+    for (auto const & [key, val] : params.data) {
         std::cout << key << ":" << val._type << std::endl;
         std::string v;
         std::cin >> v;

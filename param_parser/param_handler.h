@@ -23,10 +23,10 @@ std::string exec(const char* cmd) {
 
 Parameters request_params(std::string executable_path) {
     // Call executable request its parameters
-    std::string stdout = exec((executable_path + " --show-params 2>&1").c_str());
+    std::string std_out = exec((executable_path + " --show-params 2>&1").c_str());
 
     // Create parameters
-    Parameters params(stdout);
+    Parameters params(std_out);
     return params;
 }
 
