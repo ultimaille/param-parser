@@ -9,21 +9,52 @@
 
 struct Parameters {
 
-	// Structured param type "enum"
-	struct ParamType {
+	// List of default param types (like an "enum")
+	struct Type {
+	#define SCALAR_PARAM_TYPE(x, s) static constexpr const char* x {s};
+	#define VECTOR_PARAM_TYPE(x, s) static std::string x(int dim) { return std::string(s) + "." + std::to_string(dim); }
+
 		// Primitive types
-		static constexpr const char* Int {"int"};
-		static constexpr const char* Float {"float"};
-		static constexpr const char* Double {"double"};
-		static constexpr const char* Bool {"bool"};
-		static constexpr const char* String {"string"};
-		static constexpr const char* File {"file"};
-		static constexpr const char* Enum {"enum"};
-		// Attributes types
-		static std::string vertices(std::string s, int dim) { return "vertices." + s + "." + std::to_string(dim); }
-		static std::string facets(std::string s, int dim) { return "facets." + s + "." + std::to_string(dim); }
-		static std::string edges(std::string s, int dim) { return "edges." + s + "." + std::to_string(dim); }
-		static std::string cells(std::string s, int dim) { return "cells." + s + "." + std::to_string(dim); }
+		SCALAR_PARAM_TYPE(Int, "int")
+		SCALAR_PARAM_TYPE(Float, "float")
+		SCALAR_PARAM_TYPE(Double, "double")
+		SCALAR_PARAM_TYPE(Bool, "bool")
+		SCALAR_PARAM_TYPE(String, "string")
+		SCALAR_PARAM_TYPE(File, "file")
+		SCALAR_PARAM_TYPE(Enum, "enum")
+		SCALAR_PARAM_TYPE(Input, "input")
+
+		// Mesh types
+		SCALAR_PARAM_TYPE(Mesh, "mesh")
+		SCALAR_PARAM_TYPE(MeshTri, "mesh.tri")
+		SCALAR_PARAM_TYPE(MeshQuad, "mesh.quad")
+		SCALAR_PARAM_TYPE(MeshTet, "mesh.tet")
+		SCALAR_PARAM_TYPE(MeshHex, "mesh.hex")
+
+		// Attribute types
+		VECTOR_PARAM_TYPE(VerticesInt, "vertices.int")
+		VECTOR_PARAM_TYPE(VerticesFloat, "vertices.float")
+		VECTOR_PARAM_TYPE(VerticesDouble, "vertices.double")
+		VECTOR_PARAM_TYPE(VerticesBool, "vertices.bool")
+
+		VECTOR_PARAM_TYPE(FacetsInt, "facets.int")
+		VECTOR_PARAM_TYPE(FacetsFloat, "facets.float")
+		VECTOR_PARAM_TYPE(FacetsDouble, "facets.double")
+		VECTOR_PARAM_TYPE(FacetsBool, "facets.bool")
+
+		VECTOR_PARAM_TYPE(EdgesInt, "edges.int")
+		VECTOR_PARAM_TYPE(EdgesFloat, "edges.float")
+		VECTOR_PARAM_TYPE(EdgesDouble, "edges.double")
+		VECTOR_PARAM_TYPE(EdgesBool, "edges.bool")
+
+		VECTOR_PARAM_TYPE(CellsInt, "cells.int")
+		VECTOR_PARAM_TYPE(CellsFloat, "cells.float")
+		VECTOR_PARAM_TYPE(CellsDouble, "cells.double")
+		VECTOR_PARAM_TYPE(CellsBool, "cells.bool")
+	
+	#undef SCALAR_PARAM_TYPE
+	#undef VECTOR_PARAM_TYPE
+
 	};
 
 #define ADD_FIELD(x) Param& x(std::string str) {  _##x=str; return *this; }\
@@ -49,25 +80,25 @@ struct Parameters {
 
 		
 		operator int() {
-			assert_type_equals(ParamType::Int);
+			assert_type_equals(Type::Int);
 			try { return std::stoi(_value); }
-			catch (std::invalid_argument&) { throw_type_cast_error(_value, ParamType::Int); return -1; }
+			catch (std::invalid_argument&) { throw_type_cast_error(_value, Type::Int); return -1; }
 		}
 		
 		operator bool() {
-			assert_type_equals(ParamType::Bool);
+			assert_type_equals(Type::Bool);
 			return is("true");
 		}
 
 		operator float() {
-			assert_type_equals(ParamType::Float);
+			assert_type_equals(Type::Float);
 			try { return std::stof(_value); }
-			catch (std::invalid_argument&) { throw_type_cast_error(_value, ParamType::Float); return -1; }
+			catch (std::invalid_argument&) { throw_type_cast_error(_value, Type::Float); return -1; }
 		}
 		operator double() {
-			assert_type_equals(ParamType::Double);
+			assert_type_equals(Type::Double);
 			try { return std::stod(_value); }
-			catch (std::invalid_argument&) { throw_type_cast_error(_value, ParamType::Double); return -1; }
+			catch (std::invalid_argument&) { throw_type_cast_error(_value, Type::Double); return -1; }
 		}
 		operator std::string() { return _value; }
 
@@ -76,7 +107,7 @@ struct Parameters {
 
 		// Eventually format value (e.g: quotes for string)
 		inline std::string formatted_value() {
-			if (_type.compare(ParamType::String) == 0)
+			if (_type.compare(Type::String) == 0)
 				return "\"" + _value + "\"";
 			else 
 				return _value;
@@ -207,5 +238,7 @@ struct Parameters {
 	// the key is the parameter's name
 	std::map<std::string, Param> data;
 };
+
+
 
 #endif

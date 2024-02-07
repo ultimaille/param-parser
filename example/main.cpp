@@ -14,7 +14,6 @@ int main(int argc, char** argv) {
     params.add("float", "my_float", "0").description("A float");
     params.add("double", "my_double", "0").description("A double");
     params.add("file", "my_file", "0").description("A file");
-
     /* Parse program arguments and bind to parameters */
     params.init_from_args(argc, argv);
     /* Show args values */
