@@ -68,6 +68,7 @@ struct Parameters {
 			_description = "undefined";
 			_possible_values = "undefined";
 			_type_of_param = "undefined";
+			_visible = "true";
 		}
 
 		ADD_FIELD(type)				// should be one of "int","float","string","file","directory","bool","enum"
@@ -75,6 +76,7 @@ struct Parameters {
 		ADD_FIELD(description)
 		ADD_FIELD(possible_values)		// string with values are separated by ','. For example "option1,option2,option3"
 		ADD_FIELD(type_of_param)		// should be one of "basic" or "advanced" 
+		ADD_FIELD(visible)		// should be true or false
 		
 		Param & default_value(std::string str) {  _value=str; return *this; }
 
@@ -197,7 +199,6 @@ struct Parameters {
 		if (data.find(var_name) == data.end())
 			std::cerr << "Argument " << var_name << " is not defined for this binary\n";
 		else {
-			std::cout << s.substr(eq_pos + 1, s.size());
 			data[s.substr(0, eq_pos)]._value = s.substr(eq_pos + 1, s.size());
 		}
 	}
@@ -225,7 +226,8 @@ struct Parameters {
 			    << "value=" << it.second._value << ";"
 			    << "possible_values=" << it.second._possible_values << ";"
 			    << "description=" << it.second._description << ";"
-			    << "type_of_param=" << it.second._type_of_param
+			    << "type_of_param=" << it.second._type_of_param << ";"
+			    << "visible=" << it.second._visible
 			    << std::endl;
 			}
 			exit(EXIT_SUCCESS);
