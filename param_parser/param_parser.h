@@ -57,6 +57,13 @@ struct Parameters {
 
 	};
 
+	// List of default kind of params (like an "enum")
+	struct Kind {
+		static constexpr const char* basic {"basic"};
+		static constexpr const char* advanced {"advanced"};
+		static constexpr const char* system {"system"};
+	};
+
 #define ADD_FIELD(x) Param& x(std::string str) {  _##x=str; return *this; }\
 	std::string _##x;
 	
@@ -67,7 +74,7 @@ struct Parameters {
 			_value = "undefined";
 			_description = "undefined";
 			_possible_values = "undefined";
-			_type_of_param = "undefined";
+			_type_of_param = "basic";
 			_visible = "true";
 		}
 
@@ -75,7 +82,7 @@ struct Parameters {
 		ADD_FIELD(value)
 		ADD_FIELD(description)
 		ADD_FIELD(possible_values)		// string with values are separated by ','. For example "option1,option2,option3"
-		ADD_FIELD(type_of_param)		// should be one of "basic" or "advanced" 
+		ADD_FIELD(type_of_param)		// should be one of "basic", "advanced" or "system"
 		ADD_FIELD(visible)		// should be true or false
 		
 		Param & default_value(std::string str) {  _value=str; return *this; }
@@ -174,10 +181,10 @@ struct Parameters {
             }
 
             // Add param
-            auto param = add(kv["type"], kv["name"], kv["value"]);
+            auto & param = add(kv["type"], kv["name"], kv["value"]);
             param._possible_values = kv["possible_values"];
-            param._description = kv["description"];;
-            param._type_of_param = kv["type_of_param"];;
+            param._description = kv["description"];
+            param._type_of_param = kv["type_of_param"];
         }
 
     }

@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 
     // List fetched parameters
     for (auto const & [key, val] : params.data) {
-        std::cout << key << ":" << val._type << std::endl;
+        std::cout << key << ":" << val._type << " (" << val._type_of_param << ")" << std::endl;
         std::string v;
         std::cin >> v;
         params[key].set(v);

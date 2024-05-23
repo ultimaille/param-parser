@@ -10,12 +10,12 @@ int main(int argc, char** argv) {
 
     // Add program parameters
     /* params.add(type, name, default_value) */
-    params.add("string", "my_string", "").description("A string");
-    params.add("bool", "my_bool", "false").description("A bool");
-    params.add("int", "my_int", "0").description("A integer");
-    params.add("float", "my_float", "0").description("A float");
-    params.add("double", "my_double", "0").description("A double");
-    params.add("file", "my_file", "0").description("A file");
+    params.add(Parameters::Type::String, "my_string", "").description("A string");
+    params.add(Parameters::Type::Bool, "my_bool", "false").description("A bool");
+    params.add(Parameters::Type::Int, "my_int", "0").description("A integer");
+    params.add(Parameters::Type::Float, "my_float", "0").description("A float");
+    params.add(Parameters::Type::Double, "my_double", "0").description("A double");
+    params.add(Parameters::Type::File, "my_file", "0").description("A file").type_of_param(Parameters::Kind::advanced);
     /* Parse program arguments and bind to parameters */
     params.init_from_args(argc, argv);
     /* Show args values */
