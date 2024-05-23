@@ -133,6 +133,8 @@ struct Parameters {
 	};
 #undef ADD_FIELD
 
+	std::string help;
+
     // Default constructor
     Parameters() {}
 
@@ -190,6 +192,7 @@ struct Parameters {
 
 		return data[name];
 	}
+
 	Param& operator[](std::string name) { return data[name]; }
 
 	void init_from_string(const std::string& s) {
@@ -230,6 +233,10 @@ struct Parameters {
 			    << "visible=" << it.second._visible
 			    << std::endl;
 			}
+			exit(EXIT_SUCCESS);
+		}
+		else if (argc > 1 && std::string("-h").compare(argv[1]) == 0) {
+			std::cout << help << std::endl;
 			exit(EXIT_SUCCESS);
 		}
 

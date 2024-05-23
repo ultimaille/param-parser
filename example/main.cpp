@@ -6,6 +6,8 @@ int main(int argc, char** argv) {
     // Create parameters
     Parameters params;
 
+    params.help = "This program aims to demonstrate the use of param parser.";
+
     // Add program parameters
     /* params.add(type, name, default_value) */
     params.add("string", "my_string", "").description("A string");
