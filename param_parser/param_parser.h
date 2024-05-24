@@ -209,7 +209,8 @@ struct Parameters {
 		if (data.find(var_name) == data.end())
 			std::cerr << "Argument " << var_name << " is not defined for this binary\n";
 		else {
-			data[s.substr(0, eq_pos)]._value = s.substr(eq_pos + 1, s.size());
+			if (s.substr(eq_pos + 1, s.size()).compare("nil")!=0) 
+				data[s.substr(0, eq_pos)]._value = s.substr(eq_pos + 1, s.size());
 		}
 	}
 
