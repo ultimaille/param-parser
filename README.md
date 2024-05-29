@@ -13,6 +13,10 @@ This module also generates a formatted message intended to be read by a third-pa
 - C++ >= 17
 - Git
 
+## Documentation
+
+[Full documentation can be found here !](Documentation.md)
+
 ## Usage example
 
 Let the following program be called `parameter-example`:
