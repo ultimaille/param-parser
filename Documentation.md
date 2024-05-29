@@ -1,3 +1,11 @@
+# Introduction 
+
+Param parser is oriented to geometry processing: some parameter types are related to input model, attributes of primitives. Although not required, command-line interfaces are intended to be interpreted by a third-party application like a modeler (e.g: Graphite using [graphite add-on loader](https://github.com/ultimaille/graphite-addon-loader)).
+
+
+
+:warning: We name **client** a third-part application which use a program - that implement a command-line interface with param parser  - as an add-on. A client is usually a modeler.
+
 # Initialization
 
 ```cpp
@@ -70,9 +78,9 @@ The value of special parameters are automatically set by the client using the ex
 
 ## Reserved names
 
-Some parameter names are reserved. This special parameters are interpreted by the client.
+Some parameter names are reserved. These special parameters may be interpreted and automatically set by the client (modeler, e.g: Graphite).
 
- - `result_path`: client set this parameter value with a path that you must use to put your results files
+ - `result_path`: client set this parameter value with a path that you must use to put your results files.
 
 ## Parameter metadata
 

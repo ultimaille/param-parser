@@ -7,6 +7,8 @@ Parser for command-line options, arguments.
 This header file lets you define command-line interfaces. The program defines the parameters it needs - these are expected to be formatted as key/value pairs.
 This module also generates a formatted message intended to be read by a third-party application wishing to use this information to generate an interface.
 
+:warning: Param parser is oriented to geometry processing: some parameter types are related to input model, attributes of primitives. Although not required, command-line interfaces are intended to be interpreted by a third-party application like a modeler (e.g: Graphite using [graphite add-on loader](https://github.com/ultimaille/graphite-addon-loader)).
+
 ## Prerequisites
 
 - CMake >= 3.12..3.26
