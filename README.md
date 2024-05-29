@@ -110,7 +110,7 @@ In your program include parser like this:
 
 ### Get as header
 
-Or you can just copy/paste the `param_parser.h` header file in your project and include like this:
+Or you can just get `param_parser.h` file from one of [Releases](https://github.com/ultimaille/param-parser/releases), copy/paste the `param_parser.h` header file in your project and include like this:
 
 ```c++
 #include "param_parser.h"
