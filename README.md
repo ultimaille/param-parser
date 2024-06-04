@@ -17,7 +17,7 @@ This module also generates a formatted message intended to be read by a third-pa
 
 ## Documentation
 
-[Full documentation can be found here !](Documentation.md)
+:green_book: __[Full documentation can be found here !](Documentation.md)__
 
 ## Usage example
 
@@ -91,7 +91,7 @@ If you want to use this library as dependency, you can use the `FetchContent` mo
 FetchContent_Declare(
   param_parser
   GIT_REPOSITORY https://github.com/ultimaille/param-parser
-  GIT_TAG        v1.0.0
+  GIT_TAG        v1.0.2
 )
 FetchContent_MakeAvailable(param_parser)
 

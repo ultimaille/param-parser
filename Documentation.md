@@ -50,12 +50,7 @@ params.add(Parameters::Type::Bool, "my_bool", "true")
  - `bool`: expect a `bool` {`false`, `true`}
  - `string`: expect a `string`
  - `file`: expect a file path
-
-### Specials
-
-The value of special parameters are automatically set by the client using the executable.
-
- - `input`: expect a model path
+ - **`input`**: automatically set by the client (e.g: a modeler) by the path of the current model
 
 ### Attributes
 
@@ -76,11 +71,19 @@ The value of special parameters are automatically set by the client using the ex
  - `cells.double`: expect the name of `cells` attribute of type `double` as value
  - `cells.bool`: expect the name of `cells` attribute of type `bool` as value
 
-## Reserved names
+## Special parameters
 
 Some parameter names are reserved. These special parameters may be interpreted and automatically set by the client (modeler, e.g: Graphite).
 
  - `result_path`: client set this parameter value with a path that you must use to put your results files.
+ - `run_from`: the name of the client that call the program, empty if the program is run in standalone mode
+
+These parameters are declared automatically. You can get their values by using the following functions:
+
+```cpp
+std::string result_path = params.result_path();
+std::string run_from = params.run_from();
+```
 
 ## Parameter metadata
 

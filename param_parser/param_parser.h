@@ -143,7 +143,11 @@ struct Parameters {
 	std::string help;
 
     // Default constructor
-    Parameters() {}
+    Parameters() {
+		// Declare automatically special parameters
+		this->add("string", "result_path", "").type_of_param(Parameters::Kind::system);
+		this->add("string", "run_from", "").type_of_param(Parameters::Kind::system);
+	}
 
     // Init with serialized parameters string
     Parameters(std::string serialized_params) {
@@ -190,8 +194,8 @@ struct Parameters {
     }
 
 	Param& add(std::string type, std::string name, std::string default_value) {
-		if (data.find(name) != data.end())
-			throw std::runtime_error("Duplicate parameter '" + name + "' found.");
+		// if (data.find(name) != data.end())
+		// 	throw std::runtime_error("Duplicate parameter '" + name + "' found.");
 
 		data[name] = Param();
 		data[name]._type = type;
@@ -252,8 +256,26 @@ struct Parameters {
 		for (int p = 0; p < argc - 1;p++) init_from_string(argv[p + 1]);
 	}
 
+	// Special parameters
+	std::string result_path() {
+		return data["result_path"]._value;
+	}
+
+	std::string run_from() {
+		return data["run_from"]._value;
+	}
+
+	bool has_result_path() {
+		return !result_path().empty();
+	}
+
+	bool has_run_from() {
+		return !run_from().empty();
+	}
+
 	// the key is the parameter's name
 	std::map<std::string, Param> data;
+
 };
 
 
