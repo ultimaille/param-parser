@@ -51,7 +51,13 @@ struct Parameters {
 		VECTOR_PARAM_TYPE(CellsFloat, "cells.float")
 		VECTOR_PARAM_TYPE(CellsDouble, "cells.double")
 		VECTOR_PARAM_TYPE(CellsBool, "cells.bool")
-	
+
+		VECTOR_PARAM_TYPE(FacetCornersInt, "facet_corners.int")
+		VECTOR_PARAM_TYPE(FacetCornersFloat, "facet_corners.float")
+		VECTOR_PARAM_TYPE(FacetCornersDouble, "facet_corners.double")
+		VECTOR_PARAM_TYPE(FacetCornersBool, "facet_corners.bool")
+
+
 	#undef SCALAR_PARAM_TYPE
 	#undef VECTOR_PARAM_TYPE
 
