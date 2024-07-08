@@ -21,7 +21,7 @@ jobs:
       CXX: ${{ matrix.cfg.cxx }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -34,6 +34,13 @@ jobs:
     - name: Run executable
       run: build/bin/parameter-example --show-params
 
+  deploy:
+    needs: linux-mac
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
     -
       name: Deploy
       uses: xresloader/upload-to-github-release@v1
@@ -49,7 +56,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -67,14 +74,3 @@ jobs:
 
     - name: Debug run
       run: build/bin/Debug/parameter-example.exe --show-params
-
-    -
-      name: Deploy
-      uses: xresloader/upload-to-github-release@v1
-      with:
-        tags: true
-        draft: false
-        file: param_parser/param_parser.h
-        overwrite: false
-        update_latest_release: true
-        verbose: true
